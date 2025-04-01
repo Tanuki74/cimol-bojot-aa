@@ -34,13 +34,13 @@ new class extends Component
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
-                    @if (auth()->user()->is_admin)
+                    @if (auth()->user()->role === 'admin')
                         <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')" wire:navigate>
                             {{ __('Products') }}
                         </x-nav-link>
                     @else
                         <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')" wire:navigate>
-                            {{ __('Profile') }}
+                            {{ __('Keranjang') }}
                         </x-nav-link>
                     @endif
                 </div>
@@ -95,13 +95,13 @@ new class extends Component
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
-            @if (auth()->user()->is_admin)
+            @if (auth()->user()->role === 'admin')
                 <x-responsive-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')" wire:navigate>
                     {{ __('Products') }}
                 </x-responsive-nav-link>
             @else
                 <x-responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')" wire:navigate>
-                    {{ __('Profile') }}
+                    {{ __('Keranjang') }}
                 </x-responsive-nav-link>
             @endif
         </div>
