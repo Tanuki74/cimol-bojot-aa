@@ -33,12 +33,16 @@ new class extends Component
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')" wire:navigate>
-                        {{ __('Products') }}
-                    </x-nav-link>
+                    @if (auth()->user()->is_admin)
+                        <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')" wire:navigate>
+                            {{ __('Products') }}
+                        </x-nav-link>
+                    @else
+                        <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')" wire:navigate>
+                            {{ __('Profile') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -90,6 +94,16 @@ new class extends Component
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            @if (auth()->user()->is_admin)
+                <x-responsive-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')" wire:navigate>
+                    {{ __('Products') }}
+                </x-responsive-nav-link>
+            @else
+                <x-responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')" wire:navigate>
+                    {{ __('Profile') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

@@ -7,7 +7,11 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (Auth::check()) {
+        return redirect()->route('welcome');
+    }
+    $products = \App\Models\Product::with('category')->latest()->paginate(9);
+    return view('welcome', compact('products'));
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -24,7 +28,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {
-    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    $products = \App\Models\Product::with('category')->latest()->paginate(9);
+    Route::get('/user/dashboard', [UserController::class, 'index', compact('products')])->name('user.dashboard');
 });
 Route::view('profile', 'profile')
     ->middleware(['auth'])
