@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <title>Tambah Produk</title>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Cimol Bojot AA</div>
+        <input type="text" placeholder="cari produk atau toko" class="search">
+        <button class="logout">Logout</button>
+    </header>
+
+    <main>
+        <h1>Tambah Produk</h1>
+        <form>
+            <label>Nama Produk</label>
+            <input type="text" required>
+
+            <label>Kategori</label>
+            <input type="text" required>
+
+            <label>Stok</label>
+            <input type="text" required>
+
+            <label>Harga</label>
+            <input type="text" required>
+
+            <label>Gambar Produk</label>
+            <input type="file" accept=".png, .jpg, .gif" required>
+            <small>PNG, JPG, GIF hingga 2MB</small>
+
+            <button type="submit" class="publish">Publish</button>
+        </form>
+    </main>
+
+</body>
+</html>

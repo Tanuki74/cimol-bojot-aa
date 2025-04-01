@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keranjang Belanja</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #7b0000, #b32b00);
+            color: white;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background: #7b0000;
+            padding: 20px;
+            height: 100vh;
+            color: white;
+        }
+        .profile img {
+            width: 50px;
+            border-radius: 50%;
+        }
+        .profile h2 {
+            font-size: 18px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            margin: 20px 0;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background: #8a2e0f;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        input[type="text"] {
+            padding: 10px;
+            width: 250px;
+            border-radius: 5px;
+            border: none;
+        }
+        .logout {
+            background: #d9534f;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+        .cart h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .cart-items {
+            display: flex;
+            gap: 20px;
+        }
+        .item {
+            background: white;
+            color: black;
+            padding: 10px;
+            border-radius: 10px;
+            width: 200px;
+            text-align: center;
+        }
+        .item img {
+            width: 100%;
+            border-radius: 10px;
+        }
+        .price {
+            color: red;
+            font-weight: bold;
+        }
+        .checkout {
+            margin-top: 20px;
+            background: #d9534f;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="profile">
+            <img src="profile.png" alt="Profile">
+            <h2>Cimol Bojat AA</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Menu</a></li>
+                <li><a href="#">Keranjang</a></li>
+                <li><a href="#">Pesanan</a></li>
+                <li><a href="#">Ulasan</a></li>
+                <li><a href="#">Profil</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="main-content">
+        <header>
+            <input type="text" placeholder="Cari produk atau toko...">
+            <button class="logout">Logout</button>
+        </header>
+        
+        <section class="cart">
+            <h2>Keranjang</h2>
+            <div class="cart-items">
+                <div class="item">
+                    <img src="cimol1.png" alt="Cimol Bojat Ori Besar">
+                    <h3>Cimol Bojat Ori Besar</h3>
+                    <p>Asin Pedas Level 1</p>
+                    <p class="price">Rp 12.000</p>
+                </div>
+                <div class="item">
+                    <img src="cimol2.png" alt="Cimol Bojat Ayam Besar">
+                    <h3>Cimol Bojat Ayam Besar</h3>
+                    <p>Asin Pedas Level 2</p>
+                    <p class="price">Rp 12.000</p>
+                </div>
+            </div>
+            <button class="checkout">Checkout</button>
+        </section>
+    </div>
+</body>
+</html>
