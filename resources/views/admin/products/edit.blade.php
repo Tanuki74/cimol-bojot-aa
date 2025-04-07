@@ -17,13 +17,10 @@
                     </div>
 
                     <div>
-                        <label for="category_id" class="block text-sm font-medium text-gray-700">Category</label>
-                        <select name="category_id" id="category_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
-                            @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
+                        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                        <select name="category" id="category" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" required>
+                            <option value="Porsi Kecil" {{ $product->category == 'Porsi Kecil' ? 'selected' : '' }}>Porsi Kecil</option>
+                            <option value="Porsi Besar" {{ $product->category == 'Porsi Besar' ? 'selected' : '' }}>Porsi Besar</option>
                         </select>
                     </div>
 

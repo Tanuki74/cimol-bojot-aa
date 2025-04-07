@@ -29,7 +29,7 @@
                                     <img src="{{ asset('storage/products/' . $product->image) }}" alt="{{ $product->name }}" class="h-16 w-16 object-cover rounded">
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $product->name }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $product->category->name }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">{{ $product->category }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">{{ $product->stock }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
