@@ -20,38 +20,94 @@
                                 <!-- Product Details -->
                                 <div>
                                     <div class="space-y-4">
-                                        <p class="text-xl font-bold text-red-600">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
+                                    <p class="text-2xl font-bold text-gray-600">{{ $product->name }}</p>
+                                    @php
+                                        $categories = $product->categories;
+                                        $minPrice = $categories->min('price');
+                                        $maxPrice = $categories->max('price');
+                                        $totalStock = $categories->sum('stock');
+                                    @endphp
+                                        <p class="text-xl font-bold text-red-600">
+                                            @if ($minPrice === $maxPrice)
+                                                Rp {{ number_format($minPrice, 0, ',', '.') }}
+                                            @else
+                                                Rp {{ number_format($minPrice, 0, ',', '.') }} - Rp {{ number_format($maxPrice, 0, ',', '.') }}
+                                            @endif
+                                        </p>
                                         <!-- Add to Cart Form -->
                                         <form action="{{ route('cart.add') }}" method="POST" class="space-y-4">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                            <div class="space-y-2">
+                                            <div class="space-y-4">
                                                 <div>
-                                                    <label class="block text-sm font-medium text-gray-700">Varian Bumbu Rasa</label>
-                                                    <div class="flex items-center space-x-4">
+                                                <label class="block text-lg font-bold text-gray-700">Varian Bumbu Rasa</label>
+                                                    <div class="space-y-4">
                                                         <div class="flex items-center">
-                                                            <input type="radio" name="bumbu_rasa" value="Original" 
+                                                            <input type="radio" name="bumbu_rasa" value="Asin Pedas Level 0" 
                                                                 class="form-radio h-4 w-4 text-red-600"
-                                                                {{ $product->bumbu_rasa == 'Original' ? 'checked' : '' }}>
-                                                            <label class="ml-2 text-sm text-gray-700">Original</label>
+                                                                {{ $product->bumbu_rasa == 'Asin Pedas Level 0' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Asin Pedas Level 0</label>
                                                         </div>
                                                         <div class="flex items-center">
-                                                            <input type="radio" name="bumbu_rasa" value="Pedas" 
+                                                            <input type="radio" name="bumbu_rasa" value="Asin Pedas Level 1" 
                                                                 class="form-radio h-4 w-4 text-red-600"
-                                                                {{ $product->bumbu_rasa == 'Pedas' ? 'checked' : '' }}>
-                                                            <label class="ml-2 text-sm text-gray-700">Pedas</label>
+                                                                {{ $product->bumbu_rasa == 'Asin Pedas Level 1' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Asin Pedas Level 1</label>
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                            <input type="radio" name="bumbu_rasa" value="Asin Pedas Level 2" 
+                                                                class="form-radio h-4 w-4 text-red-600"
+                                                                {{ $product->bumbu_rasa == 'Asin Pedas Level 2' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Asin Pedas Level 2</label>
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                            <input type="radio" name="bumbu_rasa" value="Asin Pedas Level 3" 
+                                                                class="form-radio h-4 w-4 text-red-600"
+                                                                {{ $product->bumbu_rasa == 'Asin Pedas Level 3' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Asin Pedas Level 3</label>
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                            <input type="radio" name="bumbu_rasa" value="Asin Pedas Level Extra" 
+                                                                class="form-radio h-4 w-4 text-red-600"
+                                                                {{ $product->bumbu_rasa == 'Asin Pedas Level Extra' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Asin Pedas Level Extra</label>
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                            <input type="radio" name="bumbu_rasa" value="Ayam Bawang" 
+                                                                class="form-radio h-4 w-4 text-red-600"
+                                                                {{ $product->bumbu_rasa == 'Ayam Bawang' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Ayam Bawang</label>
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                            <input type="radio" name="bumbu_rasa" value="Jagung Bakar" 
+                                                                class="form-radio h-4 w-4 text-red-600"
+                                                                {{ $product->bumbu_rasa == 'Jagung Bakar' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Jagung Bakar</label>
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                            <input type="radio" name="bumbu_rasa" value="Balado" 
+                                                                class="form-radio h-4 w-4 text-red-600"
+                                                                {{ $product->bumbu_rasa == 'Balado' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Balado</label>
+                                                        </div>
+                                                        <div class="flex items-center">
+                                                            <input type="radio" name="bumbu_rasa" value="Barbeque" 
+                                                                class="form-radio h-4 w-4 text-red-600"
+                                                                {{ $product->bumbu_rasa == 'Barbeque' ? 'checked' : '' }}>
+                                                            <label class="ml-2 text-md text-gray-700">Barbeque</label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div>
                                                     <div class="flex flex-col space-y-4">
+                                                        <p class="text-lg font-bold text-gray-700">Porsi</p>
                                                         @foreach ($product->categories as $category)
                                                             <div class="flex items-center justify-between">
                                                                 <div class="flex items-center space-x-4">
                                                                     <input type="radio" name="category_id" value="{{ $category->id }}"
                                                                         class="form-radio h-4 w-4 text-red-600"
                                                                         {{ $loop->first ? 'checked' : '' }}>
-                                                                    <label class="ml-2 text-sm text-gray-700">
+                                                                    <label class="ml-2 text-md text-gray-700">
                                                                         {{ $category->category }}
                                                                         <span class="ml-2 text-gray-600">
                                                                             (Rp {{ number_format($category->price, 0, ',', '.') }})
@@ -59,7 +115,7 @@
                                                                     </label>
                                                                 </div>
                                                                 <p class="text-sm text-gray-600">
-                                                                    Stock: {{ $category->stock }} unit
+                                                                    Stock: {{ $category->stock }} 
                                                                 </p>
                                                             </div>
                                                         @endforeach

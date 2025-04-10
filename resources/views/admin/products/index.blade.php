@@ -4,7 +4,7 @@
         <div class="bg-[#9D3706] overflow-hidden border border-3 border-[#700E0E] shadow-sm sm:rounded-lg">
             <div class="p-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-2xl font-semibold text-yellow-300">Products</h2>
+                    <h2 class="text-2xl font-semibold text-yellow-300">Kelola Produk</h2>
                     <a href="{{ route('admin.products.create') }}" class="bg-[#700E0E] hover:bg-[#700E0E] text-white font-bold py-2 px-4 rounded">
                         Tambah Produk
                     </a>
