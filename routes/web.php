@@ -7,10 +7,7 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('welcome');
-    }
-    $products = \App\Models\Product::with('category')->latest()->paginate(9);
+    $products = \App\Models\Product::latest()->with('categories')->paginate(9);
     return view('welcome', compact('products'));
 });
 
@@ -25,11 +22,14 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('products', ProductController::class)->names('admin.products');
+    Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
+    Route::post('/admin/orders/{order}/complete', [AdminController::class, 'completeOrder'])->name('admin.orders.complete');
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {
-    $products = \App\Models\Product::with('category')->latest()->paginate(9);
-    Route::get('/user/dashboard', [UserController::class, 'index', compact('products')])->name('user.dashboard');
+    Route::get('/user/dashboard', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/user/products/{product}', [UserController::class, 'show'])->name('user.products.show');
+    Route::post('/cart/add', [UserController::class, 'addToCart'])->name('cart.add');
 });
 Route::view('profile', 'profile')
     ->middleware(['auth'])
