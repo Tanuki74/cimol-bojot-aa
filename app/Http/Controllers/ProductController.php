@@ -90,4 +90,9 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');
     }
+    public function daftarProduk()
+    {
+        $products = Product::with('category')->latest()->paginate(10);
+        return view('Tugas.Fisoh.menampilkanproduk', compact('products'));
+    }
 }
