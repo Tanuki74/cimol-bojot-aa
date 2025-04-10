@@ -53,21 +53,23 @@
                                         $maxPrice = $categories->max('price');
                                         $totalStock = $categories->sum('stock');
                                     @endphp
-                                    <div class="bg-white flex justify-center overflow-hidden shadow-sm sm:rounded-lg">
+                                    <div class="bg-white text-center overflow-hidden shadow-sm sm:rounded-lg">
                                         <div class="p-6">
-                                            <div class="aspect-w-16 aspect-h-9 mb-4">
-                                                <img src="{{ asset('storage/products/' . $product->image) }}" 
-                                                    alt="{{ $product->name }}" 
-                                                    class="w-full h-full object-cover rounded-lg">
-                                            </div>
-                                            <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ $product->name }}</h2>
-                                            <p class="text-xl font-bold text-red-600">
-                                                @if ($minPrice === $maxPrice)
-                                                    Rp {{ number_format($minPrice, 0, ',', '.') }}
-                                                @else
-                                                    Rp {{ number_format($minPrice, 0, ',', '.') }} - Rp {{ number_format($maxPrice, 0, ',', '.') }}
-                                                @endif
-                                            </p>
+                                            <a href="{{ route('login') }}">
+                                                <div class="aspect-w-16 aspect-h-9 mb-4">
+                                                    <img src="{{ asset('storage/products/' . $product->image) }}" 
+                                                        alt="{{ $product->name }}" 
+                                                        class="w-full h-full object-cover rounded-lg">
+                                                </div>
+                                                <h2 class="text-xl font-semibold text-gray-900 mb-2">{{ $product->name }}</h2>
+                                                <p class="text-xl font-bold text-red-600">
+                                                    @if ($minPrice === $maxPrice)
+                                                        Rp {{ number_format($minPrice, 0, ',', '.') }}
+                                                    @else
+                                                        Rp {{ number_format($minPrice, 0, ',', '.') }} - Rp {{ number_format($maxPrice, 0, ',', '.') }}
+                                                    @endif
+                                                </p>
+                                            </a>
                                         </div>
                                     </div>
                                 @endforeach
