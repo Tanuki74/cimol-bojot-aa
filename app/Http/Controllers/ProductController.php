@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,34 +12,43 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->latest()->paginate(10);
+        $products = Product::latest()->with('categories')->paginate(10);
         return view('admin.products.index', compact('products'));
     }
 
     public function create()
     {
-        $categories = Category::all();
-        return view('admin.products.create', compact('categories'));
+        return view('admin.products.create');
     }
 
     public function store(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'stock' => 'required|integer|min:0',
-            'price' => 'required|numeric|min:0',
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'categories' => 'required|array',
+            'categories.*.category' => 'required|string',
+            'categories.*.price' => 'required|numeric|min:0',
+            'categories.*.stock' => 'required|integer|min:0'
         ]);
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/products', $imageName);
-            $validated['image'] = $imageName;
+            $path = $image->storeAs('public/products', $imageName);
+            $validated['image'] = str_replace('public/', '', $path);
         }
 
-        Product::create($validated);
+        $product = Product::create($validated);
+
+        foreach ($validated['categories'] as $category) {
+            Category::create([
+                'product_id' => $product->id,
+                'category' => $category['category'],
+                'price' => $category['price'],
+                'stock' => $category['stock']
+            ]);
+        }
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product created successfully.');
@@ -47,22 +56,22 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = Category::all();
-        return view('admin.products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', compact('product'));
     }
 
     public function update(Request $request, Product $product)
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'category_id' => 'required|exists:categories,id',
-            'stock' => 'required|integer|min:0',
-            'price' => 'required|numeric|min:0',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'categories' => 'required|array',
+            'categories.*.category' => 'required|string',
+            'categories.*.price' => 'required|numeric|min:0',
+            'categories.*.stock' => 'required|integer|min:0'
         ]);
 
+        // Delete old image
         if ($request->hasFile('image')) {
-            // Delete old image
             if ($product->image) {
                 Storage::delete('public/products/' . $product->image);
             }
