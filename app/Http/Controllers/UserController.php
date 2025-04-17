@@ -22,30 +22,103 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
+            'category_id' => 'required|exists:categories,id',
+            'bumbu_rasa' => 'required|string',
         ]);
 
         $product = Product::findOrFail($validated['product_id']);
-        
-        if ($validated['quantity'] > $product->stock) {
+        $quantity = 1;
+
+        // Ambil kategori untuk stok dan harga
+        $category = $product->categories->where('id', $validated['category_id'])->first();
+        if (!$category) {
+            return back()->with('error', 'Kategori tidak ditemukan.');
+        }
+        if ($quantity > $category->stock) {
             return back()->with('error', 'Sorry, the requested quantity exceeds the available stock.');
         }
 
-        // Add to session cart
+        // Key cart unik berdasarkan product_id, category_id, bumbu_rasa
+        $cartKey = $validated['product_id'].'_'.$validated['category_id'].'_'.md5($validated['bumbu_rasa']);
         $cart = session()->get('cart', []);
         
-        if(isset($cart[$validated['product_id']])) {
-            $cart[$validated['product_id']]['quantity'] += $validated['quantity'];
+        if(isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity'] += $quantity;
         } else {
-            $cart[$validated['product_id']] = [
+            $cart[$cartKey] = [
+                "product_id" => $product->id,
+                "category_id" => $category->id,
                 "name" => $product->name,
-                "price" => $product->price,
-                "quantity" => $validated['quantity'],
+                "category_name" => $category->category,
+                "bumbu_rasa" => $validated['bumbu_rasa'],
+                "price" => $category->price,
+                "quantity" => $quantity,
                 "image" => $product->image
             ];
         }
 
         session()->put('cart', $cart);
+        if ($request->has('redirect_to_cart')) {
+            return redirect()->route('cart.view')->with('success', 'Product added to cart successfully!');
+        }
         return redirect()->route('user.dashboard')->with('success', 'Product added to cart successfully!');
+    }
+
+    public function cart()
+    {
+        $cart = session('cart', []);
+        return view('user.cart', compact('cart'));
+    }
+
+    public function updateCart(Request $request)
+    {
+        $quantities = $request->input('quantities', []);
+        $cart = session('cart', []);
+        $updated = false;
+        foreach ($quantities as $key => $qty) {
+            if (isset($cart[$key])) {
+                if ($qty < 1) {
+                    unset($cart[$key]);
+                } else {
+                    $cart[$key]['quantity'] = (int) $qty;
+                }
+                $updated = true;
+            }
+        }
+        session(['cart' => $cart]);
+        return redirect()->route('cart.view')->with('success', $updated ? 'Cart updated.' : 'No changes made.');
+    }
+
+    public function removeFromCart(Request $request, $key)
+    {
+        $cart = session('cart', []);
+        if (isset($cart[$key])) {
+            unset($cart[$key]);
+            session(['cart' => $cart]);
+            return redirect()->route('cart.view')->with('success', 'Item removed from cart.');
+        }
+        return redirect()->route('cart.view')->with('error', 'Item not found in cart.');
+    }
+
+    public function submitCheckout(Request $request)
+    {
+        $request->validate([
+            'metode_pengiriman' => 'required|string',
+        ]);
+        session(['checkout_metode_pengiriman' => $request->metode_pengiriman]);
+        return redirect()->route('order.summary');
+    }
+
+    public function orderSummary(Request $request)
+    {
+        $cart = session('cart', []);
+        $metode = session('checkout_metode_pengiriman', null);
+        if (!$cart || !$metode) {
+            return redirect()->route('cart.view')->with('error', 'Data pesanan tidak ditemukan.');
+        }
+        return view('user.order-summary', [
+            'cart' => $cart,
+            'metode' => $metode
+        ]);
     }
 }

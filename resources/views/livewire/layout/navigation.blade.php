@@ -39,7 +39,7 @@ new class extends Component
                             {{ __('Products') }}
                         </x-nav-link>
                     @else
-                        <x-nav-link :href="route('profile')" :active="request()->routeIs('profile')" wire:navigate>
+                        <x-nav-link :href="route('cart.view')" :active="request()->routeIs('cart.view')" wire:navigate>
                             {{ __('Keranjang') }}
                         </x-nav-link>
                     @endif

@@ -35,7 +35,18 @@
                                             @endif
                                         </p>
                                         <!-- Add to Cart Form -->
+                                        @if(session('success'))
+                                            <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-2 rounded mb-2">
+                                                {{ session('success') }}
+                                            </div>
+                                        @endif
+                                        @if(session('error'))
+                                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-2">
+                                                {{ session('error') }}
+                                            </div>
+                                        @endif
                                         <form action="{{ route('cart.add') }}" method="POST" class="space-y-4">
+                                            <input type="hidden" name="redirect_to_cart" value="1">
                                             @csrf
                                             <input type="hidden" name="product_id" value="{{ $product->id }}">
                                             <div class="space-y-4">
@@ -121,6 +132,7 @@
                                                         @endforeach
                                                     </div>
                                                 </div>
+
                                             </div>
                                             <button type="submit" 
                                                 class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 w-full">

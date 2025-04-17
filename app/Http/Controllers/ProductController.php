@@ -12,7 +12,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::latest()->with('categories')->paginate(10);
+        $products = Product::latest()->with('categories')->paginate(100);
         return view('admin.products.index', compact('products'));
     }
 
@@ -99,9 +99,4 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index')
             ->with('success', 'Product deleted successfully.');
     }
-    // public function daftarProduk()
-    // {
-    //     $products = Product::with('category')->latest()->paginate(10);
-    //     return view('Tugas.Fisoh.menampilkanproduk', compact('products'));
-    // }
 }
