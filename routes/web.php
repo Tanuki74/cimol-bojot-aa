@@ -7,14 +7,6 @@ use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-// Route logout standar Laravel
-Route::post('/logout', function (Request $request) {
-    auth()->logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect('/');
-})->name('logout');
-
 Route::get('/', function () {
     $products = \App\Models\Product::latest()->with('categories')->paginate(9);
     return view('welcome', compact('products'));
