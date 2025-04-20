@@ -25,6 +25,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('products', ProductController::class)->names('admin.products');
     Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
     Route::post('/admin/orders/{order}/complete', [AdminController::class, 'completeOrder'])->name('admin.orders.complete');
+    Route::post('/admin/orders/{order}/shipped', [AdminController::class, 'shipOrder'])->name('admin.orders.shipped');
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {
@@ -38,6 +39,8 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     });
     Route::post('/checkout/submit', [UserController::class, 'submitCheckout'])->name('checkout.submit');
     Route::get('/order/summary', [UserController::class, 'orderSummary'])->name('order.summary');
+    Route::post('/order/place', [UserController::class, 'placeOrder'])->name('order.place');
+    Route::get('/order/success', [UserController::class, 'orderSuccess'])->name('order.success');
 });
 Route::view('profile', 'profile')
     ->middleware(['auth'])

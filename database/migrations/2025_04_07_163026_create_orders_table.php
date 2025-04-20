@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained();
+            $table->string('metode_pengiriman');
             $table->string('bumbu_rasa');
             $table->string('category');
             $table->integer('quantity');
-            $table->string('status')->default('pending');
+            $table->string('status');
             $table->timestamps();
         });
     }

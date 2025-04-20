@@ -43,7 +43,7 @@
                         <div class="py-5">
                             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                                 <div class="mb-8">
-                                    <h1 class="text-3xl font-bold text-gray-900">Our Products</h1>
+                                    <h1 class="text-3xl font-bold text-yellow-300">Daftar Menu</h1>
                                 </div>
                                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 min-h-[400px]">
                                 @foreach($products->unique('name') as $product)
@@ -57,7 +57,7 @@
                                         <div class="p-6">
                                             <a href="{{ route('login') }}">
                                                 <div class="aspect-w-16 aspect-h-9 mb-4">
-                                                    <img src="{{ asset('storage/products/' . $product->image) }}" 
+                                                    <img src="{{ asset('storage/' . $product->image) }}" 
                                                         alt="{{ $product->name }}" 
                                                         class="w-full h-full object-cover rounded-lg">
                                                 </div>

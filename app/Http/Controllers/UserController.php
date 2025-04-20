@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -121,4 +123,37 @@ class UserController extends Controller
             'metode' => $metode
         ]);
     }
+
+    public function placeOrder(Request $request)
+    {
+        $user = \Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        $cart = session('cart', []);
+        $metode = session('checkout_metode_pengiriman', null);
+        if (!$cart || !$metode) {
+            return redirect()->route('order.summary')->with('error', 'Data pesanan tidak ditemukan.');
+        }
+        foreach ($cart as $item) {
+            \App\Models\Order::create([
+                'user_id' => $user->id,
+                'product_id' => $item['product_id'],
+                'metode_pengiriman' => $metode,
+                'bumbu_rasa' => $item['bumbu_rasa'] ?? '-',
+                'category' => $item['category_name'] ?? '-',
+                'quantity' => $item['quantity'],
+                'status' => 'paid',
+            ]);
+        }
+        session()->forget(['cart', 'checkout_metode_pengiriman']);
+        return redirect()->route('order.success');
+    }
+
+    public function orderSuccess()
+    {
+        return view('user.order-success');
+    }
 }
+
+

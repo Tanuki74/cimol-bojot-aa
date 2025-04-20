@@ -32,13 +32,11 @@ class ProductController extends Controller
             'categories.*.stock' => 'required|integer|min:0'
         ]);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('public/products', $imageName);
-            $validated['image'] = str_replace('public/', '', $path);
+        $imagepath = null;
+        if($request->hasFile('image')){
+            $imagepath = $request->file('image')->store('gambar', 'public');
         }
-
+        $validated['image'] = $imagepath;
         $product = Product::create($validated);
 
         foreach ($validated['categories'] as $category) {
@@ -70,16 +68,15 @@ class ProductController extends Controller
             'categories.*.stock' => 'required|integer|min:0'
         ]);
 
-        // Delete old image
+        // Update image if new uploaded
         if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
             if ($product->image) {
-                Storage::delete('public/products/' . $product->image);
+                Storage::disk('public')->delete($product->image);
             }
-            
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/products', $imageName);
-            $validated['image'] = $imageName;
+            // Simpan gambar baru ke folder 'gambar' di disk 'public'
+            $imagePath = $request->file('image')->store('gambar', 'public');
+            $validated['image'] = $imagePath;
         }
 
         $product->update($validated);
@@ -91,7 +88,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($product->image) {
-            Storage::delete('public/products/' . $product->image);
+            Storage::delete('public/gambar/' . $product->image);
         }
         
         $product->delete();
