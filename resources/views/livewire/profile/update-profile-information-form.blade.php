@@ -10,7 +10,7 @@ new class extends Component
 {
     public string $name = '';
     public string $email = '';
-    public string $address = '';
+    public ?string $address = null;
 
     /**
      * Mount the component.
