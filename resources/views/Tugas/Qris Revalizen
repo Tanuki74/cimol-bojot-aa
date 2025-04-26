@@ -1,0 +1,68 @@
+TYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Bayar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px;
+            width: 320px;
+        }
+
+        .logo-qris {
+            width: 100px;
+            margin-bottom: 15px;
+        }
+
+        .qr-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .qr-code {
+            width: 220px;
+            height: 220px;
+            margin-bottom: 15px;
+        }
+
+        .logo-gallery {
+            width: 120px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Logo QRIS -->
+        <img src="/mnt/data/qris-qris-quick-response-code-indonesian-standard8461.logowik.com.webp" alt="Logo QRIS" class="logo-qris">
+
+        <!-- Judul QR -->
+        <div class="qr-title">Cimol Bojot AA</div>
+
+        <!-- Kode QR -->
+        <img src="/mnt/data/QR Bayar.png" alt="Kode QR" class="qr-code">
+
+        <!-- Logo My Gallery -->
+        <img src="/mnt/data/My_Gallery.png" alt="Logo My Gallery" class="logo-gallery">
+    </div>
+
+</body>
+</html>
