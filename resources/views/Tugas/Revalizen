@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <title>Kelola Produk</title>
+    <title>Tambah Produk</title>
 </head>
 <body>
 
@@ -15,29 +15,26 @@
     </header>
 
     <main>
-        <h1>Kelola Produk</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>Produk</th>
-                    <th>Kategori</th>
-                    <th>Stok</th>
-                    <th>Harga</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Bojot Mozarela</td>
-                    <td>Porsi Kecil</td>
-                    <td>500 Porsi</td>
-                    <td>11.000</td>
-                    <td><button class="edit">EDIT</button></td>
-                </tr>
-            </tbody>
-        </table>
+        <h1>Tambah Produk</h1>
+        <form>
+            <label>Nama Produk</label>
+            <input type="text" required>
 
-        <button class="add-product">Tambah Produk</button>
+            <label>Kategori</label>
+            <input type="text" required>
+
+            <label>Stok</label>
+            <input type="text" required>
+
+            <label>Harga</label>
+            <input type="text" required>
+
+            <label>Gambar Produk</label>
+            <input type="file" accept=".png, .jpg, .gif" required>
+            <small>PNG, JPG, GIF hingga 2MB</small>
+
+            <button type="submit" class="publish">Publish</button>
+        </form>
     </main>
 
 </body>
