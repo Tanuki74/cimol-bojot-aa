@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <title>Kelola Produk</title>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Cimol Bojot AA</div>
+        <input type="text" placeholder="cari produk atau toko" class="search">
+        <button class="logout">Logout</button>
+    </header>
+
+    <main>
+        <h1>Kelola Produk</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Produk</th>
+                    <th>Kategori</th>
+                    <th>Stok</th>
+                    <th>Harga</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Bojot Mozarela</td>
+                    <td>Porsi Kecil</td>
+                    <td>500 Porsi</td>
+                    <td>11.000</td>
+                    <td><button class="edit">EDIT</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button class="add-product">Tambah Produk</button>
+    </main>
+
+</body>
+</html>
