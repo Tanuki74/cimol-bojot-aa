@@ -2,19 +2,15 @@
     <main class="mt-6 flex-1 content-area">
         <div class="py-5">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="mb-8">
-                    <h1 class="text-3xl font-bold text-gray-900">{{ $product->name }}</h1>
-                </div>
-
                 <div class="grid grid-cols-1 gap-6">
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <div class="p-6">
+                        <div class="p-8">
                             <div class="space-y-8">
                                 <!-- Product Image -->
-                                <div class="aspect-w-16 aspect-h-9">
-                                    <img src="{{ asset('storage/products/' . $product->image) }}" 
+                                <div class="w-64 h-64 mx-auto rounded-lg overflow-hidden mb-4 shadow">
+                                    <img src="{{ asset('storage/' . $product->image) }}" 
                                         alt="{{ $product->name }}" 
-                                        class="w-full h-full object-cover rounded-lg">
+                                        class="object-cover w-full h-full">
                                 </div>
 
                                 <!-- Product Details -->
@@ -116,8 +112,7 @@
                                                             <div class="flex items-center justify-between">
                                                                 <div class="flex items-center space-x-4">
                                                                     <input type="radio" name="category_id" value="{{ $category->id }}"
-                                                                        class="form-radio h-4 w-4 text-red-600"
-                                                                        {{ $loop->first ? 'checked' : '' }}>
+                                                                        class="form-radio h-4 w-4 text-red-600">
                                                                     <label class="ml-2 text-md text-gray-700">
                                                                         {{ $category->category }}
                                                                         <span class="ml-2 text-gray-600">
