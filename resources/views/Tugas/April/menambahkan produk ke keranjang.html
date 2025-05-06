@@ -1,169 +1,172 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keranjang Belanja</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <style>
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to bottom, #7b0000, #b32b00);
-            color: white;
-            display: flex;
-        }
-        .sidebar {
-            width: 250px;
-            background: #7b0000;
-            padding: 20px;
-            height: 100vh;
-            color: white;
-            position: fixed;
-            left: 0;
-            top: 0;
-        }
-        .menu-toggle {
-            font-size: 24px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        .profile {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .profile img {
-            width: 50px;
-            border-radius: 50%;
-        }
-        .profile h2 {
-            font-size: 18px;
-        }
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-        nav ul li {
-            margin: 15px 0;
-        }
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            background: #8a2e0f;
-            margin-left: 250px;
-        }
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .search-bar input {
-            padding: 10px;
-            width: 250px;
-            border-radius: 5px;
-            border: none;
-        }
-        .logout {
-            background: #d9534f;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-        }
-        .cart h2 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-        .cart-items {
-            display: flex;
-            gap: 20px;
-            justify-content: flex-start;
-        }
-        .item {
-            background: white;
-            color: black;
-            padding: 10px;
-            border-radius: 10px;
-            width: 220px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .item img {
-            width: 100%;
-            border-radius: 10px;
-        }
-        .price {
-            color: red;
-            font-weight: bold;
-        }
-        .checkout {
-            margin-top: 20px;
-            background: #d9534f;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            cursor: pointer;
-            float: right;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keranjang - Cimol Bajot A4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle, #7a0e0e 0%, #bc2e0e 100%);
+      color: white;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 200px;
+      background-color: #5b0d0d;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      color: #fff;
+    }
+    .sidebar h1 {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+    .sidebar a {
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .topbar {
+      background-color: #400404;
+      padding: 10px 220px 10px 220px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .topbar input {
+      padding: 6px 10px;
+      margin-right: 10px;
+      border-radius: 5px;
+      border: none;
+      width: 220px;
+      font-family: 'Poppins', sans-serif;
+    }
+    .topbar button {
+      background-color: #9e1b1b;
+      color: white;
+      border: none;
+      padding: 7px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .content {
+      margin-left: 220px;
+      padding: 30px;
+    }
+    .keranjang-section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .cards {
+      display: flex;
+      gap: 30px;
+      margin-top: 20px;
+    }
+    .card {
+      background-color: white;
+      color: black;
+      border-radius: 10px;
+      padding: 15px;
+      width: 220px;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+    }
+    .card h4 {
+      font-size: 14px;
+      margin: 10px 0 3px;
+      font-weight: 600;
+    }
+    .card p {
+      margin: 0;
+      font-size: 12px;
+    }
+    .card .price {
+      color: #d10000;
+      font-weight: bold;
+      margin-top: 8px;
+    }
+    .card .icon {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #333;
+    }
+    .checkout-btn {
+      margin-top: 40px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .checkout-btn button {
+      padding: 10px 25px;
+      background-color: #400404;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
-    <div class="sidebar">
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
+  <div class="sidebar">
+    <h1>Cimol Bajot A4</h1>
+    <a href="#">DASHBOARD</a>
+    <a href="#">MENU</a>
+    <a href="#">KERANJANG</a>
+    <a href="#">PESANAN</a>
+    <a href="#">ULASAN</a>
+    <a href="#">PROFIL</a>
+  </div>
+  <div class="topbar">
+    <input type="text" placeholder="cari produk disini...">
+    <button>Logout</button>
+  </div>
+  <div class="content">
+    <div class="keranjang-section">
+      <h2>Keranjang</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="https://via.placeholder.com/200x150" alt="Cimol Ori" />
+          <h4>Cimol Bajot Ori Besar</h4>
+          <p>Asin Pedas Level 1</p>
+          <p class="price">Rp. 12.000</p>
+          <div class="icon">
+            <i class="fa-regular fa-eye"></i> <span>1</span>
+          </div>
         </div>
-        <div class="profile">
-            <img src="profile.png" alt="Profile">
-            <h2>Cimol Bojat AA</h2>
+        <div class="card">
+          <img src="https://via.placeholder.com/200x150" alt="Cimol Ayam" />
+          <h4>Cimol Bajot Ayam Besar</h4>
+          <p>Asin Pedas Level 2</p>
+          <p class="price">Rp. 12.000</p>
+          <div class="icon">
+            <i class="fa-regular fa-eye"></i> <span>2</span>
+          </div>
         </div>
-        <nav>
-            <ul>
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Menu</a></li>
-                <li><a href="#">Keranjang</a></li>
-                <li><a href="#">Pesanan</a></li>
-                <li><a href="#">Ulasan</a></li>
-                <li><a href="#">Profil</a></li>
-            </ul>
-        </nav>
+      </div>
+      <div class="checkout-btn">
+        <button>Checkout</button>
+      </div>
     </div>
-    
-    <div class="main-content">
-        <header>
-            <div class="search-bar">
-                <input type="text" placeholder="Cari produk atau toko...">
-            </div>
-            <button class="logout">Logout</button>
-        </header>
-        
-        <section class="cart">
-            <h2>Keranjang</h2>
-            <div class="cart-items">
-                <div class="item">
-                    <img src="cimol1.png" alt="Cimol Bojat Ori Besar">
-                    <h3>Cimol Bojat Ori Besar</h3>
-                    <p>Asin Pedas Level 1</p>
-                    <p class="price">Rp 12.000</p>
-                </div>
-                <div class="item">
-                    <img src="cimol2.png" alt="Cimol Bojat Ayam Besar">
-                    <h3>Cimol Bojat Ayam Besar</h3>
-                    <p>Asin Pedas Level 2</p>
-                    <p class="price">Rp 12.000</p>
-                </div>
-            </div>
-            <button class="checkout">Checkout</button>
-        </section>
-    </div>
+  </div>
 </body>
 </html>
 
