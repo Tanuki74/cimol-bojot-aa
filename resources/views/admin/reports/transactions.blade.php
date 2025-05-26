@@ -76,16 +76,14 @@
                                         <td class="py-3 px-4">
                                             @php
                                                 $price = 0;
-                                                if ($order->product && $order->product->categories) {
-                                                    foreach ($order->product->categories as $category) {
-                                                        if ($category->category == $order->category) {
-                                                            $price = $category->price * $order->quantity;
-                                                            break;
-                                                        }
+                                                if ($order->product) {
+                                                    $cat = $order->product->categories->where('category', $order->category)->first();
+                                                    if ($cat) {
+                                                        $price = $order->quantity * $cat->price;
                                                     }
                                                 }
                                             @endphp
-                                            {{ number_format($price, 0, ',', '.') }}
+                                            Rp {{ number_format($price, 0, ',', '.') }}
                                         </td>
                                         <td class="py-3 px-4">{{ $order->metode_pengiriman }}</td>
                                         <td class="py-3 px-4">

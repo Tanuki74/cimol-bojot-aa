@@ -163,7 +163,7 @@ class AdminController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         
-        $query = Order::with(['product', 'user'])
+        $query = Order::with(['product.categories', 'user'])
                     ->orderBy('created_at', 'desc');
         
         if ($startDate && $endDate) {
@@ -187,7 +187,8 @@ class AdminController extends Controller
                 ->with('error', 'Tanggal awal dan akhir diperlukan untuk mengunduh laporan.');
         }
         
-        $query = Order::with(['product', 'user'])
+        $query = Order::with(['product.categories', 'user'])
+                    ->where('status', 'completed') // Only include completed orders
                     ->whereDate('created_at', '>=', $startDate)
                     ->whereDate('created_at', '<=', $endDate)
                     ->orderBy('created_at', 'desc');

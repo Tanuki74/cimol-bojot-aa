@@ -149,7 +149,18 @@
                     <td>{{ $order->user->name ?? 'User tidak tersedia' }}</td>
                     <td>{{ $order->product->name ?? 'Produk tidak tersedia' }}</td>
                     <td>{{ $order->quantity }}</td>
-                    <td>Rp {{ number_format($price, 0, ',', '.') }}</td>
+                    <td>
+                        @php
+                            $price = 0;
+                            if ($order->product) {
+                                $cat = $order->product->categories->where('category', $order->category)->first();
+                                if ($cat) {
+                                    $price = $order->quantity * $cat->price;
+                                }
+                            }
+                        @endphp
+                        Rp {{ number_format($price, 0, ',', '.') }}
+                    </td>
                     <td>{{ $order->metode_pengiriman }}</td>
                     <td><span class="status {{ $statusClass }}">{{ $statusText }}</span></td>
                 </tr>
