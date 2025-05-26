@@ -27,6 +27,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/orders/{order}/complete', [AdminController::class, 'completeOrder'])->name('admin.orders.complete');
     Route::post('/admin/orders/{order}/shipped', [AdminController::class, 'shipOrder'])->name('admin.orders.shipped');
     Route::get('/admin/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
+    Route::get('/admin/reports/transactions', [AdminController::class, 'transactionReport'])->name('admin.reports.transactions');
+    Route::get('/admin/reports/transactions/download', [AdminController::class, 'downloadTransactionReport'])->name('admin.reports.transactions.download');
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {

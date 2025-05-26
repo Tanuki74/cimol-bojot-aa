@@ -48,4 +48,45 @@ class AdminController extends Controller
         
         return view('admin.reviews.index', compact('reviews', 'products', 'productId'));
     }
+    
+    public function transactionReport(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        
+        $query = Order::with(['product', 'user'])
+                    ->orderBy('created_at', 'desc');
+        
+        if ($startDate && $endDate) {
+            $query->whereDate('created_at', '>=', $startDate)
+                  ->whereDate('created_at', '<=', $endDate);
+        }
+        
+        $orders = $query->get();
+        
+        return view('admin.reports.transactions', compact('orders', 'startDate', 'endDate'));
+    }
+    
+    public function downloadTransactionReport(Request $request)
+    {
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
+        
+        // Require both start and end dates
+        if (!$startDate || !$endDate) {
+            return redirect()->route('admin.reports.transactions')
+                ->with('error', 'Tanggal awal dan akhir diperlukan untuk mengunduh laporan.');
+        }
+        
+        $query = Order::with(['product', 'user'])
+                    ->whereDate('created_at', '>=', $startDate)
+                    ->whereDate('created_at', '<=', $endDate)
+                    ->orderBy('created_at', 'desc');
+        
+        $orders = $query->get();
+        
+        $pdf = \PDF::loadView('admin.reports.transactions_pdf', compact('orders', 'startDate', 'endDate'));
+        
+        return $pdf->download('laporan-transaksi-' . $startDate . '-to-' . $endDate . '.pdf');
+    }
 }
