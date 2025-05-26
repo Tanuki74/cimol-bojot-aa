@@ -192,7 +192,7 @@ class UserController extends Controller
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
         
-        $orders = Order::with('product')
+        $orders = Order::with(['product', 'review'])
                       ->where('user_id', $user->id)
                       ->latest()
                       ->get()
@@ -201,6 +201,82 @@ class UserController extends Controller
                       });
         
         return view('user.my-orders', compact('orders'));
+    }
+    
+    public function createReview($orderId)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $order = Order::with('product')
+                    ->where('id', $orderId)
+                    ->where('user_id', $user->id)
+                    ->where('status', 'completed')
+                    ->firstOrFail();
+        
+        // Check if review already exists
+        $existingReview = \App\Models\Review::where('order_id', $orderId)->first();
+        if ($existingReview) {
+            return redirect()->route('user.my-orders')->with('error', 'Anda sudah memberikan ulasan untuk pesanan ini.');
+        }
+        
+        return view('user.create-review', compact('order'));
+    }
+    
+    public function storeReview(Request $request, $orderId)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $validated = $request->validate([
+            'delivery_comment' => 'required|string|min:5|max:500',
+            'comment' => 'required|string|min:5|max:500',
+        ]);
+        
+        $order = Order::with('product')
+                    ->where('id', $orderId)
+                    ->where('user_id', $user->id)
+                    ->where('status', 'completed')
+                    ->firstOrFail();
+        
+        // Check if review already exists
+        $existingReview = \App\Models\Review::where('order_id', $orderId)->first();
+        if ($existingReview) {
+            return redirect()->route('user.my-orders')->with('error', 'Anda sudah memberikan ulasan untuk pesanan ini.');
+        }
+        
+        \App\Models\Review::create([
+            'user_id' => $user->id,
+            'product_id' => $order->product_id,
+            'order_id' => $order->id,
+            'delivery_comment' => $validated['delivery_comment'],
+            'comment' => $validated['comment'],
+        ]);
+        
+        return redirect()->route('user.my-orders')->with('success', 'Terima kasih atas ulasan Anda!');
+    }
+    
+    public function showReview($orderId)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $order = Order::with(['product', 'review'])
+                    ->where('id', $orderId)
+                    ->where('user_id', $user->id)
+                    ->firstOrFail();
+        
+        if (!$order->review) {
+            return redirect()->route('user.my-orders')->with('error', 'Belum ada ulasan untuk pesanan ini.');
+        }
+        
+        return view('user.show-review', compact('order'));
     }
 }
 

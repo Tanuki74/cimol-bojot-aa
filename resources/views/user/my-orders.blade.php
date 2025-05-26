@@ -71,9 +71,21 @@
                                                         'canceled' => 'Dibatalkan'
                                                     ][$order->status] ?? $order->status;
                                                 @endphp
-                                                <span class="inline-block {{ $statusClass }} px-3 py-1 rounded-full font-semibold">
-                                                    {{ $statusText }}
-                                                </span>
+                                                <div class="flex flex-col gap-2">
+                                                    <span class="inline-block {{ $statusClass }} px-3 py-1 rounded-full font-semibold">
+                                                        {{ $statusText }}
+                                                    </span>
+                                                    
+                                                    @if($order->status === 'completed' && !$order->review)
+                                                        <a href="{{ route('reviews.create', $order->id) }}" class="inline-block bg-purple-600 hover:bg-purple-700 text-white px-3 py-1 rounded-full font-semibold text-xs text-center transition">
+                                                            Beri Ulasan
+                                                        </a>
+                                                    @elseif($order->review)
+                                                        <a href="{{ route('reviews.show', $order->id) }}" class="inline-block bg-teal-600 hover:bg-teal-700 text-white px-3 py-1 rounded-full font-semibold text-xs text-center transition">
+                                                            Lihat Ulasan
+                                                        </a>
+                                                    @endif
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

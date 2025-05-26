@@ -26,6 +26,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/orders', [AdminController::class, 'orders'])->name('admin.orders');
     Route::post('/admin/orders/{order}/complete', [AdminController::class, 'completeOrder'])->name('admin.orders.complete');
     Route::post('/admin/orders/{order}/shipped', [AdminController::class, 'shipOrder'])->name('admin.orders.shipped');
+    Route::get('/admin/reviews', [AdminController::class, 'reviews'])->name('admin.reviews');
 });
 
 Route::middleware(['auth', 'role:user'])->group(function () {
@@ -43,6 +44,9 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/order/cancel', [UserController::class, 'cancelOrder'])->name('order.cancel');
     Route::get('/order/success', [UserController::class, 'orderSuccess'])->name('order.success');
     Route::get('/my-orders', [UserController::class, 'myOrders'])->name('user.my-orders');
+    Route::get('/reviews/create/{order}', [UserController::class, 'createReview'])->name('reviews.create');
+    Route::post('/reviews/{order}', [UserController::class, 'storeReview'])->name('reviews.store');
+    Route::get('/reviews/show/{order}', [UserController::class, 'showReview'])->name('reviews.show');
 });
 Route::view('profile', 'profile')
     ->middleware(['auth'])
