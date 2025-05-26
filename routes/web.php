@@ -40,6 +40,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/checkout/submit', [UserController::class, 'submitCheckout'])->name('checkout.submit');
     Route::get('/order/summary', [UserController::class, 'orderSummary'])->name('order.summary');
     Route::post('/order/place', [UserController::class, 'placeOrder'])->name('order.place');
+    Route::post('/order/cancel', [UserController::class, 'cancelOrder'])->name('order.cancel');
     Route::get('/order/success', [UserController::class, 'orderSuccess'])->name('order.success');
 });
 Route::view('profile', 'profile')

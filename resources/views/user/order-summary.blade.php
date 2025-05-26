@@ -53,6 +53,10 @@
                         @csrf
                         <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 font-semibold">Pesan</button>
                     </form>
+                    <form method="POST" action="{{ route('order.cancel') }}">
+                        @csrf
+                        <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 font-semibold">Batalkan Pesanan</button>
+                    </form>
                     <a href="{{ route('cart.view') }}" class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-center font-semibold">Kembali ke Keranjang</a>
                 </div>
             </div>
