@@ -184,6 +184,24 @@ class UserController extends Controller
         session()->forget(['cart', 'checkout_metode_pengiriman']);
         return redirect()->route('user.dashboard')->with('success', 'Pesanan telah dibatalkan.');
     }
+    
+    public function myOrders()
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $orders = Order::with('product')
+                      ->where('user_id', $user->id)
+                      ->latest()
+                      ->get()
+                      ->groupBy(function($order) {
+                          return $order->created_at->format('Y-m-d H:i:s');
+                      });
+        
+        return view('user.my-orders', compact('orders'));
+    }
 }
 
 

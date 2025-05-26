@@ -42,6 +42,7 @@ Route::middleware(['auth', 'role:user'])->group(function () {
     Route::post('/order/place', [UserController::class, 'placeOrder'])->name('order.place');
     Route::post('/order/cancel', [UserController::class, 'cancelOrder'])->name('order.cancel');
     Route::get('/order/success', [UserController::class, 'orderSuccess'])->name('order.success');
+    Route::get('/my-orders', [UserController::class, 'myOrders'])->name('user.my-orders');
 });
 Route::view('profile', 'profile')
     ->middleware(['auth'])

@@ -15,7 +15,7 @@ class AdminController extends Controller
 
     public function orders()
     {
-        $pendingOrders = Order::with(['product', 'user'])->whereIn('status', ['paid', 'shipped'])->latest()->get();
+        $pendingOrders = Order::with(['product', 'user'])->whereIn('status', ['paid', 'shipped', 'canceled'])->latest()->get();
         $completedOrders = Order::with(['product', 'user'])->where('status', 'completed')->latest()->get();
         return view('admin.orders.index', compact('pendingOrders', 'completedOrders'));
     }
