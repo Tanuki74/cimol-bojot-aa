@@ -76,10 +76,44 @@ class ProductController extends Controller
             }
             // Simpan gambar baru ke folder 'gambar' di disk 'public'
             $imagePath = $request->file('image')->store('gambar', 'public');
-            $validated['image'] = $imagePath;
+            $product->image = $imagePath;
         }
 
-        $product->update($validated);
+        // Update product basic info
+        $product->name = $validated['name'];
+        $product->save();
+        
+        // Update or create categories
+        $existingCategories = $product->categories->pluck('id')->toArray();
+        $updatedCategoryIds = [];
+        
+        foreach ($validated['categories'] as $i => $categoryData) {
+            if (isset($product->categories[$i])) {
+                // Update existing category
+                $category = $product->categories[$i];
+                $category->category = $categoryData['category'];
+                $category->price = $categoryData['price'];
+                $category->stock = $categoryData['stock'];
+                $category->save();
+                $updatedCategoryIds[] = $category->id;
+            } else {
+                // Create new category
+                $category = new Category([
+                    'product_id' => $product->id,
+                    'category' => $categoryData['category'],
+                    'price' => $categoryData['price'],
+                    'stock' => $categoryData['stock']
+                ]);
+                $category->save();
+                $updatedCategoryIds[] = $category->id;
+            }
+        }
+        
+        // Delete categories that were removed in the form
+        $categoriesToDelete = array_diff($existingCategories, $updatedCategoryIds);
+        if (!empty($categoriesToDelete)) {
+            Category::whereIn('id', $categoriesToDelete)->delete();
+        }
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product updated successfully.');
