@@ -44,15 +44,14 @@
         <div class="bg-white rounded-2xl shadow-md p-6 mt-4">
             <div class="text-xl font-bold mb-4">Total Bayar: Rp {{ number_format($total, 0, ',', '.') }}</div>
             <div class="flex flex-col items-center justify-center">
-                <span class="font-semibold">Scan QR untuk Pembayaran:</span>
-                <div class="mt-2 mb-6">
-                    {!! QrCode::size(180)->generate('Pembayaran pesanan CIMOLBOJOT, total: Rp ' . number_format($total, 0, ',', '.')) !!}
-                </div>
+                <span class="font-semibold">Scan QR untuk Melakukan Pembayaran</span>
+                <form method="POST" action="{{ route('order.place') }}" class="mt-2 mb-6">
+                    @csrf
+                    <button type="submit" class="border-0 p-0 bg-transparent cursor-pointer hover:opacity-90 transition-opacity">
+                        {!! QrCode::size(180)->generate('Pembayaran pesanan CIMOLBOJOT, total: Rp ' . number_format($total, 0, ',', '.')) !!}
+                    </button>
+                </form>
                 <div class="flex flex-col sm:flex-row gap-4 w-full justify-center">
-                    <form method="POST" action="{{ route('order.place') }}">
-                        @csrf
-                        <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 font-semibold">Pesan</button>
-                    </form>
                     <form method="POST" action="{{ route('order.cancel') }}">
                         @csrf
                         <button type="submit" class="w-full sm:w-auto px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 font-semibold">Batalkan Pesanan</button>
