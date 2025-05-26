@@ -130,24 +130,63 @@ class UserController extends Controller
         if (!$user) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
+        
         $cart = session('cart', []);
         $metode = session('checkout_metode_pengiriman', null);
+        
         if (!$cart || !$metode) {
             return redirect()->route('order.summary')->with('error', 'Data pesanan tidak ditemukan.');
         }
-        foreach ($cart as $item) {
-            \App\Models\Order::create([
-                'user_id' => $user->id,
-                'product_id' => $item['product_id'],
-                'metode_pengiriman' => $metode,
-                'bumbu_rasa' => $item['bumbu_rasa'] ?? '-',
-                'category' => $item['category_name'] ?? '-',
-                'quantity' => $item['quantity'],
-                'status' => 'paid',
-            ]);
+        
+        // Begin transaction to ensure data integrity
+        \DB::beginTransaction();
+        
+        try {
+            foreach ($cart as $item) {
+                // Get the category to update stock
+                $category = \App\Models\Category::where('id', $item['category_id'])
+                    ->where('product_id', $item['product_id'])
+                    ->first();
+                
+                if (!$category) {
+                    throw new \Exception('Kategori produk tidak ditemukan.');
+                }
+                
+                // Check if enough stock is available
+                if ($category->stock < $item['quantity']) {
+                    throw new \Exception("Stok tidak cukup untuk {$item['name']} - {$item['category_name']}. Tersedia: {$category->stock}.");
+                }
+                
+                // Reduce the stock
+                $category->stock -= $item['quantity'];
+                $category->save();
+                
+                // Create the order
+                \App\Models\Order::create([
+                    'user_id' => $user->id,
+                    'product_id' => $item['product_id'],
+                    'metode_pengiriman' => $metode,
+                    'bumbu_rasa' => $item['bumbu_rasa'] ?? '-',
+                    'category' => $item['category_name'] ?? '-',
+                    'quantity' => $item['quantity'],
+                    'status' => 'paid',
+                ]);
+            }
+            
+            // If everything is successful, commit the transaction
+            \DB::commit();
+            
+            // Clear the cart and checkout data
+            session()->forget(['cart', 'checkout_metode_pengiriman']);
+            
+            return redirect()->route('order.success');
+            
+        } catch (\Exception $e) {
+            // If something goes wrong, rollback the transaction
+            \DB::rollBack();
+            
+            return redirect()->route('order.summary')->with('error', $e->getMessage());
         }
-        session()->forget(['cart', 'checkout_metode_pengiriman']);
-        return redirect()->route('order.success');
     }
 
     public function orderSuccess()
