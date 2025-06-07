@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Konfirmasi Logout</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.6); /* transparan gelap */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .modal {
+      background-color: #7a0000; /* merah gelap */
+      padding: 40px 30px;
+      border-radius: 12px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+
+    .modal h2 {
+      color: #ffffff;
+      font-size: 18px;
+      font-weight: bold;
+      font-style: italic;
+      margin-bottom: 35px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .btn {
+      padding: 10px 25px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .btn-cancel {
+      background-color: #dcdcdc; /* abu muda */
+      color: #000000;
+    }
+
+    .btn-yes {
+      background-color: #ff0000; /* merah terang */
+      color: #ffffff;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="modal">
+    <h2>Anda Yakin Ingin Logout?</h2>
+    <div class="button-group">
+      <button class="btn btn-cancel">Batal</button>
+      <button class="btn btn-yes">Ya</button>
+    </div>
+  </div>
+</body>
+</html>
