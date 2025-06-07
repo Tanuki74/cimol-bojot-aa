@@ -1,0 +1,113 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F4F4F4;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.navbar {
+    background-color: #7C1A1A;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.navbar .logo img {
+    height: 40px;
+}
+
+.navbar .menu .logout {
+    background-color: #FF4C4C;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.form-container {
+    background-color: #7F2C28;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="number"], input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #DDD;
+    border-radius: 5px;
+}
+
+.categories {
+    margin-bottom: 20px;
+}
+
+.category {
+    display: flex;
+    gap: 15px;
+}
+
+.category input {
+    flex: 1;
+}
+
+.add-category {
+    background-color: #6B2E1C;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.buttons button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.hide {
+    background-color: #999;
+    color: white;
+}
+
+.publish {
+    background-color: #9C3B28;
+    color: white;
+}
+
+.delete {
+    background-color: #D32F2F;
+    color: white;
+}
