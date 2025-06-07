@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">
+                <img src="logo.png" alt="Cimol Bojot AA">
+            </div>
+            <div class="menu">
+                <button class="logout">Logout</button>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <h2>Edit Produk</h2>
+            <form action="#" method="POST" enctype="multipart/form-data">
+                <label for="product-name">Product Name</label>
+                <input type="text" id="product-name" name="product-name" placeholder="Enter Product Name">
+
+                <div class="categories">
+                    <h3>Categories</h3>
+                    <div class="category">
+                        <input type="text" placeholder="Category Name" name="category-name[]">
+                        <input type="number" placeholder="Price" name="price[]">
+                        <input type="number" placeholder="Stock" name="stock[]">
+                    </div>
+                    <div class="category">
+                        <input type="text" placeholder="Category Name" name="category-name[]">
+                        <input type="number" placeholder="Price" name="price[]">
+                        <input type="number" placeholder="Stock" name="stock[]">
+                    </div>
+                    <button type="button" class="add-category">Add Category</button>
+                </div>
+
+                <label for="product-image">Product Image</label>
+                <input type="file" id="product-image" name="product-image">
+                <p>Hanya file gambar yang diperbolehkan (JPG, JPEG, PNG, GIF, SVG). Maksimal ukuran 2MB.</p>
+
+                <div class="buttons">
+                    <button type="button" class="hide">Hide</button>
+                    <button type="submit" class="publish">Publish</button>
+                    <button type="button" class="delete">DELETE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
