@@ -17,4 +17,9 @@ class Category extends Model
     {
         return $this->belongsTo(Product::class);
     }
+    
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class)->withPivot('price');
+    }
 }
