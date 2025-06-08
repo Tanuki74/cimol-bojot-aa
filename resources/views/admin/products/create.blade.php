@@ -79,11 +79,9 @@ function addCategory() {
             </div>
         </div>
     `;
-    
-    if (categoryCount === 0) {
-        // Add first category automatically
-        addCategory();
-    }
+}
+window.onload = function() {
+    addCategory();
 }
 </script>
 </x-app-layout>

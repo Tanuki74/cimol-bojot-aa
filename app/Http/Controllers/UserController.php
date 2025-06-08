@@ -130,29 +130,198 @@ class UserController extends Controller
         if (!$user) {
             return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
         }
+        
         $cart = session('cart', []);
         $metode = session('checkout_metode_pengiriman', null);
+        
         if (!$cart || !$metode) {
             return redirect()->route('order.summary')->with('error', 'Data pesanan tidak ditemukan.');
         }
+        
+        // Begin transaction to ensure data integrity
+        \DB::beginTransaction();
+        
+        try {
+            foreach ($cart as $item) {
+                // Get the category to update stock
+                $category = \App\Models\Category::where('id', $item['category_id'])
+                    ->where('product_id', $item['product_id'])
+                    ->first();
+                
+                if (!$category) {
+                    throw new \Exception('Kategori produk tidak ditemukan.');
+                }
+                
+                // Check if enough stock is available
+                if ($category->stock < $item['quantity']) {
+                    throw new \Exception("Stok tidak cukup untuk {$item['name']} - {$item['category_name']}. Tersedia: {$category->stock}.");
+                }
+                
+                // Reduce the stock
+                $category->stock -= $item['quantity'];
+                $category->save();
+                
+                // Create the order
+                \App\Models\Order::create([
+                    'user_id' => $user->id,
+                    'product_id' => $item['product_id'],
+                    'metode_pengiriman' => $metode,
+                    'bumbu_rasa' => $item['bumbu_rasa'] ?? '-',
+                    'category' => $item['category_name'] ?? '-',
+                    'quantity' => $item['quantity'],
+                    'status' => 'paid',
+                ]);
+            }
+            
+            // If everything is successful, commit the transaction
+            \DB::commit();
+            
+            // Clear the cart and checkout data
+            session()->forget(['cart', 'checkout_metode_pengiriman']);
+            
+            return redirect()->route('order.success');
+            
+        } catch (\Exception $e) {
+            // If something goes wrong, rollback the transaction
+            \DB::rollBack();
+            
+            return redirect()->route('order.summary')->with('error', $e->getMessage());
+        }
+    }
+
+    public function orderSuccess()
+    {
+        return view('user.order-success');
+    }
+    
+    public function cancelOrder(Request $request)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $cart = session('cart', []);
+        $metode = session('checkout_metode_pengiriman', null);
+        
+        if (!$cart || !$metode) {
+            return redirect()->route('cart.view')->with('error', 'Data pesanan tidak ditemukan.');
+        }
+        
         foreach ($cart as $item) {
-            \App\Models\Order::create([
+            Order::create([
                 'user_id' => $user->id,
                 'product_id' => $item['product_id'],
                 'metode_pengiriman' => $metode,
                 'bumbu_rasa' => $item['bumbu_rasa'] ?? '-',
                 'category' => $item['category_name'] ?? '-',
                 'quantity' => $item['quantity'],
-                'status' => 'paid',
+                'status' => 'canceled',
             ]);
         }
+        
         session()->forget(['cart', 'checkout_metode_pengiriman']);
-        return redirect()->route('order.success');
+        return redirect()->route('user.dashboard')->with('success', 'Pesanan telah dibatalkan.');
     }
-
-    public function orderSuccess()
+    
+    public function myOrders()
     {
-        return view('user.order-success');
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $orders = Order::with(['product', 'review'])
+                      ->where('user_id', $user->id)
+                      ->latest()
+                      ->get()
+                      ->groupBy(function($order) {
+                          return $order->created_at->format('Y-m-d H:i:s');
+                      });
+        
+        return view('user.my-orders', compact('orders'));
+    }
+    
+    public function createReview($orderId)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $order = Order::with('product')
+                    ->where('id', $orderId)
+                    ->where('user_id', $user->id)
+                    ->where('status', 'completed')
+                    ->firstOrFail();
+        
+        // Check if review already exists
+        $existingReview = \App\Models\Review::where('order_id', $orderId)->first();
+        if ($existingReview) {
+            return redirect()->route('user.my-orders')->with('error', 'Anda sudah memberikan ulasan untuk pesanan ini.');
+        }
+        
+        return view('user.create-review', compact('order'));
+    }
+    
+    public function storeReview(Request $request, $orderId)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $validated = $request->validate([
+            'delivery_comment' => 'required|string|min:5|max:500',
+            'comment' => 'required|string|min:5|max:500',
+        ]);
+        
+        $order = Order::with('product')
+                    ->where('id', $orderId)
+                    ->where('user_id', $user->id)
+                    ->where('status', 'completed')
+                    ->firstOrFail();
+        
+        // Check if review already exists
+        $existingReview = \App\Models\Review::where('order_id', $orderId)->first();
+        if ($existingReview) {
+            return redirect()->route('user.my-orders')->with('error', 'Anda sudah memberikan ulasan untuk pesanan ini.');
+        }
+        
+        \App\Models\Review::create([
+            'user_id' => $user->id,
+            'product_id' => $order->product_id,
+            'order_id' => $order->id,
+            'delivery_comment' => $validated['delivery_comment'],
+            'comment' => $validated['comment'],
+        ]);
+        
+        return redirect()->route('user.my-orders')->with('success', 'Terima kasih atas ulasan Anda!');
+    }
+    
+    public function showReview($orderId)
+    {
+        $user = Auth::user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu.');
+        }
+        
+        $order = Order::with(['product', 'review'])
+                    ->where('id', $orderId)
+                    ->where('user_id', $user->id)
+                    ->firstOrFail();
+        
+        if (!$order->review) {
+            return redirect()->route('user.my-orders')->with('error', 'Belum ada ulasan untuk pesanan ini.');
+        }
+        
+        return view('user.show-review', compact('order'));
+    }
+        public function riwayatPesanan()
+    {
+        $orders = Order::with('product.categories')->where('user_id', auth()->id())->get();
+
+        return view('Tugas.Fisoh.HistoryOrders', compact('orders'));
     }
 }
 

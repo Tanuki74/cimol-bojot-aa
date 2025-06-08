@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Logo</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Product</a></li>
+            </ul>
+        </nav>
+        <button class="logout">Logout</button>
+    </header>
+
+    <main>
+        <section class="container">
+            <h2>Menunggu Persetujuan</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Pelanggan</th>
+                        <th>Total</th>
+                        <th>Layanan</th>
+                        <th>Status</th>
+                        <th>Tanggal</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>001</td>
+                        <td>John Doe</td>
+                        <td>Rp 100.000</td>
+                        <td>Antar Ke Lokasi</td>
+                        <td>Pembayaran Berhasil</td>
+                        <td>19 Jan 2025 10:10</td>
+                        <td>
+                            <a href="#">Detail</a> | 
+                            <a href="#">Setuju</a> | 
+                            <a href="#">Tolak</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <section class="container">
+            <h2>Pesanan Terbaru</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Pelanggan</th>
+                        <th>Total</th>
+                        <th>Layanan</th>
+                        <th>Status</th>
+                        <th>Tanggal</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>002</td>
+                        <td>Jane Smith</td>
+                        <td>Rp 200.000</td>
+                        <td>Antar Ke Lokasi</td>
+                        <td>Pembayaran Berhasil</td>
+                        <td>20 Jan 2025 11:00</td>
+                        <td><a href="#">Detail</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>

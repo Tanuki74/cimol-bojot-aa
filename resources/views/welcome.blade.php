@@ -21,6 +21,7 @@
                 );
                 position: relative;
                 overflow: hidden;
+                height: 100vh;
             }
             .content-area {
                 min-height: calc(100vh - 160px); /* Subtract header and footer height */
@@ -35,10 +36,10 @@
                         <div class="flex lg:justify-center lg:col-start-2">
                             <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                         </div>
+                        @if (Route::has('login'))
+                            <livewire:welcome.navigation />
+                        @endif
                     </header>
-                    @if (Route::has('login'))
-                        <livewire:welcome.navigation />
-                    @endif
                     <main class="mt-6 flex-1">
                         <div class="py-5">
                             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -78,7 +79,7 @@
                         </div>
                     </main>
                     <footer class="py-4 text-center text-sm text-black dark:text-white/70">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                        Cimol Bojot AA &copy 2025 | PPL Kelompok E
                     </footer>
                 </div>
             </div>

@@ -1,0 +1,140 @@
+Index Html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riwayat Pesanan</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-custom">
+    <a class="navbar-brand text-white" href="#">Cimol Bojat AA</a>
+    <div class="ms-auto">
+      <button class="btn btn-custom">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-custom">
+          <div class="card-body">
+            <h5 class="card-title">Riwayat Pesanan</h5>
+            <div class="d-flex justify-content-between mb-3">
+              <div class="d-flex">
+                <input type="date" class="form-control me-2" placeholder="Tanggal Dari">
+                <input type="date" class="form-control me-2" placeholder="Tanggal Sampai">
+                <button class="btn btn-custom">Cari</button>
+              </div>
+              <button class="btn btn-custom">Unduh Laporan</button>
+            </div>
+            <table class="table table-bordered table-custom">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Tanggal</th>
+                  <th>ID Customer</th>
+                  <th>ID Pesanan</th>
+                  <th>Quantity</th>
+                  <th>Price Total</th>
+                  <th>Metode Pengambilan</th>
+                  <th>Status Pembayaran</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Bojot Beef</td>
+                  <td>1</td>
+                  <td>1</td>
+                  <td>2</td>
+                  <td>22.0000</td>
+                  <td>Diantar ke lokasi</td>
+                  <td>Selesai</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
+
+CSS
+
+/* Custom Navbar */
+.navbar-custom {
+  background-color: #800000;
+}
+
+.navbar-custom .navbar-brand {
+  color: white;
+}
+
+.navbar-custom .btn-custom {
+  background-color: #800000;
+  color: white;
+}
+
+/* Card Styling */
+.card-custom {
+  background-color: #f7f2f0;
+  border-radius: 10px;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* Table Styling */
+.table-custom th, .table-custom td {
+  text-align: center;
+  padding: 10px;
+}
+
+.table-custom th {
+  background-color: #800000;
+  color: white;
+  font-weight: bold;
+}
+
+.table-custom td {
+  background-color: #fff;
+}
+
+/* Search Section */
+.d-flex .form-control {
+  margin-right: 10px;
+}
+
+.d-flex .btn-custom {
+  margin-left: 10px;
+}
+
+/* Button Styling */
+.btn-custom {
+  background-color: #800000;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+
+.btn-custom:hover {
+  background-color: #660000;
+}
+
+/* Margin for Layout */
+.container {
+  margin-top: 20px;
+}

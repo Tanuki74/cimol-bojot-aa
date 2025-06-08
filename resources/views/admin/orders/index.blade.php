@@ -19,6 +19,7 @@
                                             <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Nama Produk</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Bumbu Rasa</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Kategori</th>
+                                            <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Jumlah</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Harga</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Metode Pengiriman</th>
                                             <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Status</th>
@@ -37,12 +38,18 @@
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $order->product->name }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $order->bumbu_rasa }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $order->category }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap">{{ $order->quantity }} unit</td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @php
                                                 $cat = $order->product->categories->where('category', $order->category)->first();
+                                                $unitPrice = $cat ? $cat->price : 0;
+                                                $totalPrice = $unitPrice * $order->quantity;
                                             @endphp
                                             @if($cat)
-                                                Rp {{ number_format($cat->price, 0, ',', '.') }}
+                                                <div>
+                                                    <div>Rp {{ number_format($totalPrice, 0, ',', '.') }}</div>
+                                                    <div class="text-xs text-gray-500">(Rp {{ number_format($unitPrice, 0, ',', '.') }} × {{ $order->quantity }})</div>
+                                                </div>
                                             @else
                                                 <span class="text-gray-400">-</span>
                                             @endif
@@ -91,6 +98,7 @@
                                                 <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Nama Produk</th>
                                                 <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Bumbu Rasa</th>
                                                 <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Kategori</th>
+                                                <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Jumlah</th>
                                                 <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Harga</th>
                                                 <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Metode Pengiriman</th>
                                                 <th class="px-6 py-3 text-left text-xs font-bold text-yellow-200 uppercase tracking-wider">Status</th>
@@ -108,12 +116,18 @@
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $order->product->name }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $order->bumbu_rasa }}</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">{{ $order->category }}</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">{{ $order->quantity }} unit</td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     @php
                                                         $cat = $order->product->categories->where('category', $order->category)->first();
+                                                        $unitPrice = $cat ? $cat->price : 0;
+                                                        $totalPrice = $unitPrice * $order->quantity;
                                                     @endphp
                                                     @if($cat)
-                                                        Rp {{ number_format($cat->price, 0, ',', '.') }}
+                                                        <div>
+                                                            <div>Rp {{ number_format($totalPrice, 0, ',', '.') }}</div>
+                                                            <div class="text-xs text-gray-500">(Rp {{ number_format($unitPrice, 0, ',', '.') }} × {{ $order->quantity }})</div>
+                                                        </div>
                                                     @else
                                                         <span class="text-gray-400">-</span>
                                                     @endif
