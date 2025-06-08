@@ -317,6 +317,12 @@ class UserController extends Controller
         
         return view('user.show-review', compact('order'));
     }
+        public function riwayatPesanan()
+    {
+        $orders = Order::with('product.categories')->where('user_id', auth()->id())->get();
+
+        return view('Tugas.Fisoh.HistoryOrders', compact('orders'));
+    }
 }
 
 
