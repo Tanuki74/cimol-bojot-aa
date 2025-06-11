@@ -24,37 +24,51 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
                             @foreach ($products as $product)
-                                @foreach ($product->categories as $category)
                                 <tr>
                                     <td class="px-6 py-4 whitespace-nowrap">
-                                        @if ($loop->parent->first)
-                                            <img src="{{ asset('storage/products/' . $product->image) }}" 
-                                                alt="{{ $product->name }}" 
-                                                class="h-16 w-16 object-cover rounded">
+                                        <img src="{{ asset('storage/' . $product->image) }}" 
+                                            alt="{{ $product->name }}" 
+                                            class="h-16 w-16 object-cover rounded">
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-lg font-semibold text-gray-900">{{ $product->name }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap align-top">
+                                        @if($product->categories->count() > 0)
+                                            <div class="flex flex-col gap-1">
+                                                @foreach($product->categories as $cat)
+                                                    <span class="px-2 py-1 text-center text-xs font-semibold rounded @if(Str::contains(strtolower($cat->category), 'kecil')) bg-[#9D3706] text-white @elseif(Str::contains(strtolower($cat->category), 'besar')) bg-[#9D3706] text-white @else bg-gray-200 text-gray-800 @endif">
+                                                        {{ $cat->category }}
+                                                    </span>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <span class="text-gray-500">-</span>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        @if ($loop->parent->first)
-                                            <div class="text-lg font-semibold text-gray-900">{{ $product->name }}</div>
+                                    <td class="px-6 py-4 whitespace-nowrap align-top">
+                                        @if($product->categories->count() > 0)
+                                            <div class="flex flex-col gap-1">
+                                                @foreach($product->categories as $cat)
+                                                    <span class="block text-sm text-gray-600">Rp {{ number_format($cat->price, 0, ',', '.') }}</span>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <span class="text-gray-500">-</span>
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs font-medium bg-[#9D3706] text-white rounded">
-                                            {{ $category->category }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-sm text-gray-600">
-                                            Rp {{ number_format($category->price, 0, ',', '.') }}
-                                        </span>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-nowrap">
-                                        <span class="text-sm text-gray-600">
-                                            {{ $category->stock }} unit
-                                        </span>
+                                    <td class="px-6 py-4 whitespace-nowrap align-top">
+                                        @if($product->categories->count() > 0)
+                                            <div class="flex flex-col gap-1">
+                                                @foreach($product->categories as $cat)
+                                                    <span class="block text-sm text-gray-600">{{ $cat->stock }} unit</span>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <span class="text-gray-500">-</span>
+                                        @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                        @if ($loop->parent->first)
                                         <div class="flex space-x-2">
                                             <a href="{{ route('admin.products.edit', $product) }}" 
                                                 class="text-indigo-600 hover:text-indigo-900">
@@ -72,10 +86,8 @@
                                                 </button>
                                             </form>
                                         </div>
-                                        @endif
                                     </td>
                                 </tr>
-                                @endforeach
                             @endforeach
                         </tbody>
                     </table>

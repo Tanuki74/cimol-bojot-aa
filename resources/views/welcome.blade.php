@@ -21,6 +21,7 @@
                 );
                 position: relative;
                 overflow: hidden;
+                height: 100vh;
             }
             .content-area {
                 min-height: calc(100vh - 160px); /* Subtract header and footer height */
@@ -35,15 +36,15 @@
                         <div class="flex lg:justify-center lg:col-start-2">
                             <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
                         </div>
+                        @if (Route::has('login'))
+                            <livewire:welcome.navigation />
+                        @endif
                     </header>
-                    @if (Route::has('login'))
-                        <livewire:welcome.navigation />
-                    @endif
                     <main class="mt-6 flex-1">
                         <div class="py-5">
                             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                                 <div class="mb-8">
-                                    <h1 class="text-3xl font-bold text-gray-900">Our Products</h1>
+                                    <h1 class="text-3xl font-bold text-yellow-300">Daftar Menu</h1>
                                 </div>
                                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 min-h-[400px]">
                                 @foreach($products->unique('name') as $product)
@@ -57,7 +58,7 @@
                                         <div class="p-6">
                                             <a href="{{ route('login') }}">
                                                 <div class="aspect-w-16 aspect-h-9 mb-4">
-                                                    <img src="{{ asset('storage/products/' . $product->image) }}" 
+                                                    <img src="{{ asset('storage/' . $product->image) }}" 
                                                         alt="{{ $product->name }}" 
                                                         class="w-full h-full object-cover rounded-lg">
                                                 </div>
@@ -78,7 +79,7 @@
                         </div>
                     </main>
                     <footer class="py-4 text-center text-sm text-black dark:text-white/70">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
+                        Cimol Bojot AA &copy 2025 | PPL Kelompok E
                     </footer>
                 </div>
             </div>

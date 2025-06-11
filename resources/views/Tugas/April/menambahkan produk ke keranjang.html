@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keranjang Belanja</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <style>
         body {
             margin: 0;
@@ -19,6 +20,19 @@
             padding: 20px;
             height: 100vh;
             color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+        }
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         .profile img {
             width: 50px;
@@ -30,25 +44,28 @@
         nav ul {
             list-style: none;
             padding: 0;
+            margin-top: 20px;
         }
         nav ul li {
-            margin: 20px 0;
+            margin: 15px 0;
         }
         nav ul li a {
             color: white;
             text-decoration: none;
+            font-weight: bold;
         }
         .main-content {
             flex: 1;
             padding: 20px;
             background: #8a2e0f;
+            margin-left: 250px;
         }
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        input[type="text"] {
+        .search-bar input {
             padding: 10px;
             width: 250px;
             border-radius: 5px;
@@ -63,20 +80,22 @@
         }
         .cart h2 {
             font-size: 24px;
-            margin-bottom: 20px;
             font-weight: bold;
+            margin-bottom: 20px;
         }
         .cart-items {
             display: flex;
             gap: 20px;
+            justify-content: flex-start;
         }
         .item {
             background: white;
             color: black;
             padding: 10px;
             border-radius: 10px;
-            width: 200px;
+            width: 220px;
             text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
         .item img {
             width: 100%;
@@ -93,11 +112,15 @@
             padding: 10px 15px;
             border: none;
             cursor: pointer;
+            float: right;
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
+        <div class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </div>
         <div class="profile">
             <img src="profile.png" alt="Profile">
             <h2>Cimol Bojat AA</h2>
@@ -116,7 +139,9 @@
     
     <div class="main-content">
         <header>
-            <input type="text" placeholder="Cari produk atau toko...">
+            <div class="search-bar">
+                <input type="text" placeholder="Cari produk atau toko...">
+            </div>
             <button class="logout">Logout</button>
         </header>
         
@@ -141,3 +166,4 @@
     </div>
 </body>
 </html>
+

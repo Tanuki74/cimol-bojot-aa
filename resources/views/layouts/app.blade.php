@@ -43,6 +43,10 @@
             <main>
                 {{ $slot }}
             </main>
+
+            <footer class="text-center text-sm text-black dark:text-white/70">
+                Cimol Bojot AA &copy 2025 | PPL Kelompok E
+            </footer>
         </div>
     </body>
 </html>

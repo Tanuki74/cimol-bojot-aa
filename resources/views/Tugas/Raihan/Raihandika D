@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Metode Pengambilan Pesanan</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#4A0C0C] flex items-center justify-center min-h-screen">
+  <div class="bg-[#A63E0C] p-8 rounded-lg shadow-lg max-w-xl w-full text-center">
+    <h1 class="text-white text-xl font-semibold mb-1">Pilih Metode Pengambilan Pesanan</h1>
+    <p class="text-yellow-300 text-sm mb-6">Silakan pilih cara yang paling nyaman untuk menerima pesanan Anda:</p>
+
+    <div class="flex justify-center gap-8">
+      <!-- Ambil di Gerai -->
+      <div class="flex flex-col items-center">
+        <div class="bg-white rounded-full w-24 h-24 flex items-center justify-center shadow-md mb-2">
+          <img src="https://img.icons8.com/ios-filled/50/shop.png" alt="Ambil Di Gerai" class="w-10 h-10">
+        </div>
+        <button class="bg-[#2D2D2D] text-white text-sm px-4 py-1 rounded">Ambil Di Gerai</button>
+      </div>
+
+      <!-- Diantar ke Lokasi -->
+      <div class="flex flex-col items-center">
+        <div class="bg-white rounded-full w-24 h-24 flex items-center justify-center shadow-md mb-2">
+          <img src="https://img.icons8.com/ios-filled/50/delivery.png" alt="Diantar Ke Lokasi" class="w-10 h-10">
+        </div>
+        <button class="bg-[#2D2D2D] text-white text-sm px-4 py-1 rounded">Diantar Ke Lokasi</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

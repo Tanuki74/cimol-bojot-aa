@@ -32,13 +32,11 @@ class ProductController extends Controller
             'categories.*.stock' => 'required|integer|min:0'
         ]);
 
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $path = $image->storeAs('public/products', $imageName);
-            $validated['image'] = str_replace('public/', '', $path);
+        $imagepath = null;
+        if($request->hasFile('image')){
+            $imagepath = $request->file('image')->store('gambar', 'public');
         }
-
+        $validated['image'] = $imagepath;
         $product = Product::create($validated);
 
         foreach ($validated['categories'] as $category) {
@@ -70,19 +68,52 @@ class ProductController extends Controller
             'categories.*.stock' => 'required|integer|min:0'
         ]);
 
-        // Delete old image
+        // Update image if new uploaded
         if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
             if ($product->image) {
-                Storage::delete('public/products/' . $product->image);
+                Storage::disk('public')->delete($product->image);
             }
-            
-            $image = $request->file('image');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/products', $imageName);
-            $validated['image'] = $imageName;
+            // Simpan gambar baru ke folder 'gambar' di disk 'public'
+            $imagePath = $request->file('image')->store('gambar', 'public');
+            $product->image = $imagePath;
         }
 
-        $product->update($validated);
+        // Update product basic info
+        $product->name = $validated['name'];
+        $product->save();
+        
+        // Update or create categories
+        $existingCategories = $product->categories->pluck('id')->toArray();
+        $updatedCategoryIds = [];
+        
+        foreach ($validated['categories'] as $i => $categoryData) {
+            if (isset($product->categories[$i])) {
+                // Update existing category
+                $category = $product->categories[$i];
+                $category->category = $categoryData['category'];
+                $category->price = $categoryData['price'];
+                $category->stock = $categoryData['stock'];
+                $category->save();
+                $updatedCategoryIds[] = $category->id;
+            } else {
+                // Create new category
+                $category = new Category([
+                    'product_id' => $product->id,
+                    'category' => $categoryData['category'],
+                    'price' => $categoryData['price'],
+                    'stock' => $categoryData['stock']
+                ]);
+                $category->save();
+                $updatedCategoryIds[] = $category->id;
+            }
+        }
+        
+        // Delete categories that were removed in the form
+        $categoriesToDelete = array_diff($existingCategories, $updatedCategoryIds);
+        if (!empty($categoriesToDelete)) {
+            Category::whereIn('id', $categoriesToDelete)->delete();
+        }
 
         return redirect()->route('admin.products.index')
             ->with('success', 'Product updated successfully.');
@@ -91,7 +122,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         if ($product->image) {
-            Storage::delete('public/products/' . $product->image);
+            Storage::delete('public/gambar/' . $product->image);
         }
         
         $product->delete();

@@ -38,16 +38,28 @@ new class extends Component
                         <x-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')" wire:navigate>
                             {{ __('Products') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.orders')" :active="request()->routeIs('admin.orders')" wire:navigate>
+                            {{ __('Orders') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.reviews')" :active="request()->routeIs('admin.reviews')" wire:navigate>
+                            {{ __('Reviews') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('admin.reports.transactions')" :active="request()->routeIs('admin.reports.transactions')" wire:navigate>
+                            {{ __('Laporan') }}
+                        </x-nav-link>
                     @else
                         <x-nav-link :href="route('cart.view')" :active="request()->routeIs('cart.view')" wire:navigate>
                             {{ __('Keranjang') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('user.my-orders')" :active="request()->routeIs('user.my-orders')" wire:navigate>
+                            {{ __('Pesanan Saya') }}
                         </x-nav-link>
                     @endif
                 </div>
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6" id="dropdown">
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
@@ -99,9 +111,21 @@ new class extends Component
                 <x-responsive-nav-link :href="route('admin.products.index')" :active="request()->routeIs('admin.products.index')" wire:navigate>
                     {{ __('Products') }}
                 </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.orders')" :active="request()->routeIs('admin.orders')" wire:navigate>
+                    {{ __('Orders') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.reviews')" :active="request()->routeIs('admin.reviews')" wire:navigate>
+                    {{ __('Reviews') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.reports.transactions')" :active="request()->routeIs('admin.reports.transactions')" wire:navigate>
+                    {{ __('Laporan') }}
+                </x-responsive-nav-link>
             @else
-                <x-responsive-nav-link :href="route('profile')" :active="request()->routeIs('profile')" wire:navigate>
+                <x-responsive-nav-link :href="route('cart.view')" :active="request()->routeIs('cart.view')" wire:navigate>
                     {{ __('Keranjang') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('user.my-orders')" :active="request()->routeIs('user.my-orders')" wire:navigate>
+                    {{ __('Pesanan Saya') }}
                 </x-responsive-nav-link>
             @endif
         </div>
