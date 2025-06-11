@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Transaksi - Cimol Bojot AA</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #8B0000, #FFA500);
+            min-height: 100vh;
+            padding: 40px;
+        }
+
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 1000px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h3, h4 {
+            text-align: center;
+            margin: 0;
+        }
+
+        h3 {
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        thead {
+            background-color: #f2f2f2;
+        }
+
+        td:first-child {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>LAPORAN TRANSAKSI</h3>
+        <h4>CIMOL BOJOT AA</h4>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>ID Customer</th>
+                    <th>ID Pesanan</th>
+                    <th>Quantity</th>
+                    <th>Price Total</th>
+                    <th>Metode Pengambilan</th>
+                    <th>Status Pembayaran</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>08-06-2025</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>22.0000</td>
+                    <td>Diantar ke lokasi</td>
+                    <td>Selesai</td>
+                </tr>
+                <!-- Tambahkan baris data lainnya di sini -->
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
