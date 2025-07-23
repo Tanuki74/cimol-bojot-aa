@@ -7,8 +7,8 @@
         }
     },
     "routes": [
-        { "src": "/build/(.*)", "dest": "/public/build/" },
-        { "src": "/(.*)", "dest": "/api/index.php" }
+        { "src": "^/build/(.*)", "dest": "/public/build/$1" },
+        { "src": "^/(.*)$", "dest": "/api/index.php" }
     ],
     "public": true,
     "buildCommand": "composer install && php artisan config:cache && php artisan route:cache && php artisan view:cache && npm install && npm run build",
